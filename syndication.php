@@ -157,7 +157,7 @@ if(!empty($onlyusfids))
 }
 
 // Get the threads to syndicate.
-$query = $db->simple_select("threads", "subject, tid, dateline, firstpost", "visible='1' AND closed NOT LIKE 'moved|%' {$permsql} {$forumlist}", array('order_by' => 'dateline', 'order_dir' => 'DESC', 'limit' => $thread_limit));
+$query = $db->simple_select("threads", "subject, username, uid, tid, dateline, firstpost", "visible='1' AND closed NOT LIKE 'moved|%' {$permsql} {$forumlist}", array('order_by' => 'dateline', 'order_dir' => 'DESC', 'limit' => $thread_limit));
 // Loop through all the threads.
 while($thread = $db->fetch_array($query))
 {
@@ -165,6 +165,9 @@ while($thread = $db->fetch_array($query))
 		"title" => $parser->parse_badwords($thread['subject']),
 		"link" => $channel['link'].get_thread_link($thread['tid']),
 		"date" => $thread['dateline'],
+		"username" => $thread['username'],
+		"userid" => $thread['uid'],
+		"userlink" => str_replace( '{uid}', $thread['uid'], $channel['link'] . PROFILE_URL )
 	);
 
 	$firstposts[] = $thread['firstpost'];
