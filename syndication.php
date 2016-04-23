@@ -166,7 +166,6 @@ while($thread = $db->fetch_array($query))
 		"link" => $channel['link'].get_thread_link($thread['tid']),
 		"date" => $thread['dateline'],
 		"username" => $thread['username'],
-		"userid" => $thread['uid'],
 		"userlink" => str_replace( '{uid}', $thread['uid'], $channel['link'] . PROFILE_URL )
 	);
 
